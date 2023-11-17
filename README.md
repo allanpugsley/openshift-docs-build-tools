@@ -1,3 +1,3 @@
 # openshift-build-tools
 
-Dockerfiles to validate and build openshift-docs AsciiDoc.
+Dockerfiles to validate and build openshift-docs AsciiDoc files.
