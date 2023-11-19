@@ -1,14 +1,14 @@
-FROM ruby:3.2.2-alpine3.18 AS builder
+FROM ruby:3.1.2-alpine AS builder
 
 RUN apk update && apk add --virtual build-dependencies build-base
 
-RUN gem install listen ascii_binder asciidoctor asciidoctor-diagram rouge
+RUN gem install listen asciidoctor asciidoctor-diagram rouge ascii_binder
 
-FROM ruby:3.2.2-alpine3.18
+FROM ruby:3.1.2-alpine
 
 COPY --from=builder /usr/local/bundle /usr/local/bundle
 
-RUN apk add --update --no-cache git bash && apk upgrade --no-cache
+RUN apk add --update --no-cache git bash
 
 RUN git config --system --add safe.directory '*'
 
