@@ -21,4 +21,6 @@ RUN python3 -m ensurepip && pip3 install --no-cache --upgrade pip setuptools \
 
 RUN git config --system --add safe.directory '*'
 
+RUN mkdir -p /tmp/vault/ocp-docs-netlify-secret
+
 CMD ["/bin/bash"]
