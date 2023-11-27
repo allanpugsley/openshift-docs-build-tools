@@ -11,7 +11,7 @@ COPY ./aura.tar.gz /
 
 ENV PYTHONUNBUFFERED=1
 
-RUN apk add --update --no-cache git findutils python3 bash nodejs npm \
+RUN apk add --update --no-cache git findutils python3 bash jq nodejs npm \
     && ln -sf python3 /usr/bin/python \
     && npm install netlify-cli -g
 
