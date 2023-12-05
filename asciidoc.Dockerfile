@@ -22,10 +22,10 @@ RUN python3 -m ensurepip \
 RUN yum module reset nodejs -y \
     && yum module install nodejs:18 -y
 
-RUN npm install -g netlify-cli
-
-RUN chown -R $USER:$(id -gn $USER) /opt/app-root/src/.config
+RUN npm install -g netlify-cli --unsafe-perm=true
 
 RUN git config --system --add safe.directory '*'
+
+RUN chmod -R a+rw /opt/app-root/src/
 
 CMD ["/bin/bash"]
