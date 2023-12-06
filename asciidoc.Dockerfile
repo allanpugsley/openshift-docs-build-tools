@@ -8,6 +8,8 @@ RUN gem install listen asciidoctor asciidoctor-diagram rouge ascii_binder && yum
 
 RUN yum update -y \
     && yum install -y jq python3 \
+    && yum module reset nodejs -y \
+    && yum module install nodejs:18 -y \
     && yum clean all
 
 COPY ./aura.tar.gz /
@@ -18,9 +20,6 @@ RUN python3 -m ensurepip \
     && pip3 install --no-cache --upgrade pip setuptools wheel pyyaml lxml requests yamllint \
     && pip3 install --no-cache-dir /aura.tar.gz \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
-
-RUN yum module reset nodejs -y \
-    && yum module install nodejs:18 -y
 
 RUN npm install -g netlify-cli --unsafe-perm=true
 
