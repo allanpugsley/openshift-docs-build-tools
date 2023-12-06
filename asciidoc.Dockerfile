@@ -24,8 +24,10 @@ RUN yum module reset nodejs -y \
 
 RUN npm install -g netlify-cli --unsafe-perm=true
 
+RUN chmod -R a+rw /opt/app-root/src/
+
 RUN git config --system --add safe.directory '*'
 
-RUN chmod -R a+rw /opt/app-root/src/
+WORKDIR /ocpd-src
 
 CMD ["/bin/bash"]
