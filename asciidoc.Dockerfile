@@ -7,9 +7,11 @@ ENV LANG=en_US.UTF-8
 RUN gem install listen asciidoctor asciidoctor-diagram rouge ascii_binder && yum clean all
 
 RUN yum update -y \
-    && yum install -y jq python3 \
+    && yum install -y jq python3 python3-devel \
     && yum module reset nodejs -y \
     && yum module install nodejs:18 -y \
+    && yum copr enable mczernek/vale -y \
+    && yum install vale -y \
     && yum clean all
 
 COPY ./aura.tar.gz /
@@ -17,7 +19,7 @@ COPY ./aura.tar.gz /
 ENV PYTHONUNBUFFERED=1
 
 RUN python3 -m ensurepip \
-    && pip3 install --no-cache --upgrade pip setuptools wheel pyyaml lxml requests yamllint \
+    && python3 -m pip install --no-cache --upgrade pip setuptools wheel pyyaml lxml requests yamllint \
     && pip3 install --no-cache-dir /aura.tar.gz \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
 
