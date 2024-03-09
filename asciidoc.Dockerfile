@@ -4,7 +4,7 @@ USER root
 
 ENV LANG=en_US.UTF-8
 
-RUN gem install listen asciidoctor asciidoctor-diagram rouge ascii_binder && yum clean all
+RUN gem install listen asciidoctor:2.0.20 asciidoctor-diagram:2.2.9 rouge ascii_binder && yum clean all
 
 RUN yum update -y \
     && yum install -y jq python3 python3-devel \
