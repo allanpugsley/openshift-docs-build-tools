@@ -4,14 +4,15 @@ USER root
 
 ENV LANG=en_US.UTF-8
 
-RUN gem install listen asciidoctor:2.0.20 asciidoctor-diagram:2.2.9 rouge ascii_binder && yum clean all
+RUN gem install ascii_binder && \
+    gem install asciidoctor-diagram rouge listen asciidoctor:2.0.20 && \
+    gem uninstall asciidoctor:2.0.22 \
+    yum clean all
 
 RUN yum update -y \
     && yum install -y jq python3 python3-devel \
     && yum module reset nodejs -y \
     && yum module install nodejs:18 -y \
-    && yum copr enable mczernek/vale -y \
-    && yum install vale -y \
     && yum clean all
 
 COPY ./aura.tar.gz /
@@ -19,11 +20,18 @@ COPY ./aura.tar.gz /
 ENV PYTHONUNBUFFERED=1
 
 RUN python3 -m ensurepip \
-    && python3 -m pip install --no-cache --upgrade pip setuptools wheel pyyaml lxml requests yamllint \
+    && python3 -m pip install --no-cache --upgrade pip setuptools wheel pyyaml requests yamllint \
     && pip3 install --no-cache-dir /aura.tar.gz \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
 
-RUN npm install -g netlify-cli --unsafe-perm=true
+RUN curl -s https://api.github.com/repos/errata-ai/vale/releases/latest | grep "browser_download_url.*Linux_64-bit.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi - && \
+    tar -xvzf *Linux_64-bit.tar.gz && \
+    mv vale /usr/local/bin/vale
+
+# Install netlify-cli on AMD64 only
+RUN if [ "$(uname -m)" != "aarch64" ]; then \
+    npm install -g netlify-cli --unsafe-perm=true; \
+    fi
 
 RUN chmod -R a+rw /opt/app-root/src/
 
