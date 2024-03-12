@@ -20,10 +20,18 @@ The image is available from https://quay.io/repository/redhat-docs/openshift-doc
 
 To use it, `podman pull quay.io/redhat-docs/openshift-docs-asciidoc`.
 
-```
-podman buildx build --platform linux/amd64,linux/arm64 --tag quay.io/redhat-docs/openshift-docs-asciidoc:multiarch -f asciibinder.Dockerfile
+# multiarch build
+
+```cmd
+podman buildx build --platform linux/amd64,linux/arm64 --tag quay.io/redhat-docs/openshift-docs-asciidoc:multiarch -f asciidoc.Dockerfile
+
+podman tag <commit_hash> quay.io/redhat-docs/openshift-docs-asciidoc:multiarch
+
+podman push quay.io/redhat-docs/openshift-docs-asciidoc:multiarch
 ```
 
-`podman run --rm -it -v "$(pwd)":~/ocpd-src:Z <commit_hash> sh -c 'asciidoctor -v'`
+# testing
 
-`podman run --rm -it -v "$(pwd)":~/ocpd-src:Z 55f01ec2c3a1b8d55831cfd94bb36d4e1df38b293d82fb19e774360699840736 sh -c 'asciidoctor -v'`
+```cmd
+podman run --rm -it -v "$(pwd)":~/ocpd-src:Z <commit_hash> sh -c 'asciidoctor -v'
+```
