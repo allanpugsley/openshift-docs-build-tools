@@ -5,9 +5,12 @@ USER root
 ENV LANG=en_US.UTF-8
 
 RUN gem install ascii_binder && \
-    gem install asciidoctor-diagram rouge listen asciidoctor:2.0.20 && \
-    gem uninstall asciidoctor:2.0.22 \
-    yum clean all
+    gem install asciidoctor-diagram rouge listen && \
+    # Need to stay on asciidoctor 2.0.20
+    gem install asciidoctor -v 2.0.20 && \
+    gem uninstall asciidoctor -v '> 2.0.20' && \
+    yum clean all && \
+    asciidoctor -v
 
 RUN yum update -y \
     && yum install -y jq python3 python3-devel \
