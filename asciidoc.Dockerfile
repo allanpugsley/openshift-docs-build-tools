@@ -13,7 +13,7 @@ RUN gem install ascii_binder && \
     asciidoctor -v
 
 RUN yum update -y \
-    && yum install -y jq python3 python3-devel \
+    && yum install -y jq python3 python3-devel podman \
     && yum module reset nodejs -y \
     && yum module install nodejs:18 -y \
     && yum clean all
