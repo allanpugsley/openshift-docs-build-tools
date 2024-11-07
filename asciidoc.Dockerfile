@@ -13,7 +13,7 @@ RUN gem install ascii_binder && \
     asciidoctor -v
 
 RUN yum update -y \
-    && yum install -y jq python3 python3-devel podman \
+    && yum install -y jq python3 python3-devel \
     && yum module reset nodejs -y \
     && yum module install nodejs:18 -y \
     && yum clean all
@@ -23,8 +23,8 @@ COPY ./aura.tar.gz /
 ENV PYTHONUNBUFFERED=1
 
 RUN python3 -m ensurepip \
-    && python3 -m pip install --no-cache --upgrade pip setuptools wheel pyyaml requests yamllint \
     && pip3 install --no-cache-dir /aura.tar.gz \
+    && python3 -m pip install --no-cache --upgrade pip setuptools wheel pyyaml requests yamllint pillow \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
 
 RUN curl -s https://api.github.com/repos/errata-ai/vale/releases/latest | grep "browser_download_url.*Linux_64-bit.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi - && \
