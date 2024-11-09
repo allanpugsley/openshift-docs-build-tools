@@ -20,6 +20,16 @@ podman tag <commit_hash> quay.io/redhat-docs/openshift-docs-asciidoc:latest
 podman push quay.io/redhat-docs/openshift-docs-asciidoc:latest
 ```
 
+## bccutil-prow
+
+```cmd
+podman build -t openshift-docs-bccutil:latest --platform linux/amd64 -f bccutil-prow.Dockerfile
+
+podman tag <commit-hash> quay.io/redhat-docs/openshift-docs-bccutil:latest
+
+podman push quay.io/redhat-docs/openshift-docs-bccutil:latest
+```
+
 ## Multiarch build
 
 ```cmd
