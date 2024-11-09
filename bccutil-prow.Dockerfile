@@ -27,7 +27,12 @@ RUN curl -fsSL https://rpm.nodesource.com/setup_16.x | bash - \
 
 RUN npm install -g netlify-cli@v14.2.0 --unsafe-perm=true
 
-RUN gem install asciidoctor asciidoctor-diagram
+# Need to stay on asciidoctor 2.0.20
+RUN gem install asciidoctor-diagram && \
+    # Need to stay on asciidoctor 2.0.20
+    gem install asciidoctor -v 2.0.20 && \
+    gem uninstall asciidoctor -v '> 2.0.20' && \
+    yum clean all
 
 RUN git config --system --add safe.directory '*'
 
