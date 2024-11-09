@@ -2,8 +2,14 @@ FROM quay.io/ivanhorvath/ccutil:amazing as builder
 
 COPY ./aura.tar.gz /
 
-RUN pip install --no-cache-dir /aura.tar.gz \
-    && python -m pip install --no-cache setuptools wheel pyyaml requests yamllint pillow \
+RUN yum update -y \
+    && yum install -y jq python3 python3-devel \
+    && yum clean all
+
+RUN python3 -m ensurepip \
+    && python3 -m pip install --no-cache --upgrade pip setuptools wheel \
+    && python3 -m pip install --no-cache-dir lxml pyyaml requests yamllint pillow --use-deprecated=legacy-resolver \
+    && pip install --no-cache-dir /aura.tar.gz \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
 
 RUN yum install -y \
