@@ -4,6 +4,10 @@ COPY ./aura.tar.gz /
 
 RUN yum update -y \
     && yum install -y jq python3 python3-devel \
+    curl \
+    ruby \
+    ruby-devel \
+    git \
     && yum clean all
 
 RUN python3 -m ensurepip \
@@ -12,20 +16,14 @@ RUN python3 -m ensurepip \
     && pip install --no-cache-dir /aura.tar.gz \
     && rm -rf /var/cache/yum /tmp/* /var/tmp/*
 
-RUN yum install -y \
-    curl \
-    ruby \
-    ruby-devel \
-    git \
-    && yum clean all \
-    && rm -rf /var/cache/yum
-
 RUN curl -fsSL https://rpm.nodesource.com/setup_16.x | bash - \
     && yum install -y nodejs \
     && yum clean all \
     && rm -rf /var/cache/yum
 
 RUN npm install -g netlify-cli@v14.2.0 --unsafe-perm=true
+
+RUN gem install asciidoctor asciidoctor-diagram
 
 RUN git config --system --add safe.directory '*'
 
