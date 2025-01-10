@@ -29,7 +29,8 @@ RUN python3 -m ensurepip \
 
 RUN curl -s https://api.github.com/repos/errata-ai/vale/releases/latest | grep "browser_download_url.*Linux_64-bit.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi - && \
     tar -xvzf *Linux_64-bit.tar.gz && \
-    mv vale /usr/local/bin/vale
+    mv vale /usr/local/bin/vale && \
+    vale -v
 
 # Install netlify-cli on AMD64 only
 RUN if [ "$(uname -m)" != "aarch64" ]; then \
