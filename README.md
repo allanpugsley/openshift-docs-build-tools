@@ -9,10 +9,6 @@ podman login registry.redhat.io
 
 podman login quay.io/redhat-docs
 
-podman rmi quay.io/redhat-docs/openshift-docs-asciidoc:multiarch
-
-podman rmi localhost/openshift-docs-asciidoc:multiarch
-
 podman build -t openshift-docs-asciidoc:latest --platform linux/amd64 -f asciidoc.Dockerfile
 
 podman tag <commit_hash> quay.io/redhat-docs/openshift-docs-asciidoc:latest
@@ -23,10 +19,6 @@ podman push quay.io/redhat-docs/openshift-docs-asciidoc:latest
 ## Multiarch build
 
 ```cmd
-podman rmi quay.io/redhat-docs/openshift-docs-asciidoc:latest
-
-podman rmi localhost/openshift-docs-asciidoc:latest
-
 podman build --platform linux/arm64 --tag quay.io/redhat-docs/openshift-docs-asciidoc:multiarch -f asciidoc.Dockerfile
 
 podman tag <commit_hash> quay.io/redhat-docs/openshift-docs-asciidoc:multiarch

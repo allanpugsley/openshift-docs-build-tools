@@ -39,6 +39,8 @@ RUN if [ "$(uname -m)" != "aarch64" ]; then \
 
 RUN chmod -R a+rw /opt/app-root/src/
 
+RUN curl https://htmltest.wjdp.uk | bash -s -- -b /usr/local/bin
+
 RUN git config --system --add safe.directory '*'
 
 WORKDIR /ocpd-src
