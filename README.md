@@ -1,4 +1,4 @@
-# openshift-build-tools
+d# openshift-build-tools
 
 Dockerfile with tools to validate and build openshift-docs AsciiDoc files.
 
